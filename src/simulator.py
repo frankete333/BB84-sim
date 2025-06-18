@@ -16,14 +16,14 @@ qc = QuantumCircuit(number_of_qubits, number_of_qubits)
 
 for i in range(number_of_qubits):
   # Decido si el qubit es 0 o 1
-  if random.randint(0, 1) <= 0.5:
+  if random.uniform(0, 1) <= 0.5:
     A_bit_values.append(False)
   else:
     A_bit_values.append(True)
     qc.x(i)
 
   # Decido si aplicar hadamard
-  if random.randint(0, 1) <= 0.5:
+  if random.uniform(0, 1) <= 0.5:
     A_hadamard_applied.append(True)
     qc.h(i)
   else:
@@ -32,14 +32,14 @@ for i in range(number_of_qubits):
 # Simulo el canal comprometido
 if is_channel_compromised:
   for i in range(number_of_qubits):
-    if random.randint(0, 1) <= e_read_probability:
-      if random.randint(0, 1) <= 0.5:
+    if random.uniform(0, 1) <= e_read_probability:
+      if random.uniform(0, 1) <= 0.5:
         qc.h(i)
       qc.measure(i, i)
 
 # B lee los qubits de A y aplica hadamard
 for i in range(number_of_qubits):
-  if random.randint(0, 1) <= 0.5:
+  if random.uniform(0, 1) <= 0.5:
     B_hadamard_applied.append(True)
     qc.h(i)
   else:
@@ -84,15 +84,4 @@ for i in random_indices:
 
 print(f"Matching results: {matching_results}")
 print(f"Wrong results: {wrong_results}")
-print(f"Total qubits with matching basis: {cont_of_matching_hadamard_applied}")
-
-
-
-
-
-
-
-
-
-
-
+print(f"Percentage of errors in tested qubits: {100*wrong_results/(cont_of_matching_hadamard_applied/2)}%")
